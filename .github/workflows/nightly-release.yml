@@ -32,7 +32,7 @@ jobs:
 
       - name: Configure CMake
         if: github.event_name == 'workflow_dispatch' || steps.check.outputs.commits > 0
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DSLANG_CI_BUILD=ON
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         if: github.event_name == 'workflow_dispatch' || steps.check.outputs.commits > 0
