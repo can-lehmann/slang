@@ -43,7 +43,7 @@ jobs:
 
       - name: Build
         if: github.event_name == 'workflow_dispatch' || steps.check.outputs.commits > 0
-        run: cmake --build build -j
+        run: cmake --build build
 
       - name: Package artifacts
         if: github.event_name == 'workflow_dispatch' || steps.check.outputs.commits > 0
