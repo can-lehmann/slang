@@ -7,17 +7,25 @@ on:
 
 jobs:
   nightly-build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-21 main"
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt-get update
+          sudo apt-get install -y g++-14 g++-11 clang-21 clang-tidy-21
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2.22
         with:
-          key: nightly-ubuntu-24.04
+          key: nightly-ubuntu-latest
 
       - name: Check for new commits since last nightly release
         id: check
