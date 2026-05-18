@@ -63,6 +63,15 @@ jobs:
           if [ -d build/source ]; then
             cp -r build/source/* artifacts/source/ 2>/dev/null || true
           fi
+          # Copy external dependencies (fmt, mimalloc, etc.)
+          if [ -d build/_deps ]; then
+            mkdir -p artifacts/_deps
+            for dep in fmt-src mimalloc-src; do
+              if [ -d "build/_deps/$dep" ]; then
+                cp -r "build/_deps/$dep" "artifacts/_deps/" 2>/dev/null || true
+              fi
+            done
+          fi
           # Verify we have artifacts
           if [ -z "$(ls -A artifacts/bin)" ] && [ -z "$(ls -A artifacts/lib)" ]; then
             echo "Error: No artifacts found to package"
