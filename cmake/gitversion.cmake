@@ -144,7 +144,7 @@ function(get_git_version _patch _hash)
   endif()
 
   execute_process(
-    COMMAND ${GIT_EXECUTABLE} describe --tags --dirty
+    COMMAND ${GIT_EXECUTABLE} describe --tags --dirty --exclude=nightly
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     OUTPUT_VARIABLE _version_string
     ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
