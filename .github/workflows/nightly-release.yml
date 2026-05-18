@@ -50,7 +50,7 @@ jobs:
       - name: Package artifacts
         if: github.event_name == 'workflow_dispatch' || steps.check.outputs.commits > 0
         run: |
-          mkdir -p artifacts/bin artifacts/lib
+          mkdir -p artifacts/bin artifacts/lib artifacts/source
           # Copy binaries
           if [ -d build/bin ]; then
             cp -r build/bin/* artifacts/bin/ 2>/dev/null || true
@@ -58,6 +58,10 @@ jobs:
           # Copy libraries
           if [ -d build/lib ]; then
             cp -r build/lib/* artifacts/lib/ 2>/dev/null || true
+          fi
+          # Copy source
+          if [ -d build/source ]; then
+            cp -r build/source/* artifacts/source/ 2>/dev/null || true
           fi
           # Verify we have artifacts
           if [ -z "$(ls -A artifacts/bin)" ] && [ -z "$(ls -A artifacts/lib)" ]; then
